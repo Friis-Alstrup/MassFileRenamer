@@ -25,7 +25,6 @@ namespace MassFileRenamer.Controller
 
         private List<string> ReadCSVFile(string csvFilePath)
         {
-
             List<string> namelist = new List<string>();
             string file = $"{csvFilePath}";
 
@@ -39,15 +38,12 @@ namespace MassFileRenamer.Controller
                     line = sr.ReadLine();
                 }
             }
-
             return namelist;
         }
 
         public void RenameFiles(string filesPath, string extension, string csvFilePath, string fromPath, string toPath)
         {
-
             int counter = 1;
-
             foreach (string file in ReadFiles(filesPath, extension))
             {
                 int i = file.IndexOf("_");
@@ -68,7 +64,5 @@ namespace MassFileRenamer.Controller
                 }
             }
         }
-
-
     }
 }
