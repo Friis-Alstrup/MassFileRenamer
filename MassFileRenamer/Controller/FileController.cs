@@ -9,10 +9,10 @@ namespace MassFileRenamer.Controller
 {
     public class FileController
     {
-        public List<string> ReadFiles(string folderPath, string extension)
+        private List<string> ReadFiles(string filesPath, string extension)
         {
             List<string> filelist = new List<string>();
-            string[] files = Directory.GetFiles($@"{folderPath}", $"*.{extension}");
+            string[] files = Directory.GetFiles($@"{filesPath}", $"*.{extension}");
 
             foreach (var file in files)
             {
@@ -23,7 +23,7 @@ namespace MassFileRenamer.Controller
             return filelist;
         }
 
-        public List<string> ReadCSVFile(string csvFilePath)
+        private List<string> ReadCSVFile(string csvFilePath)
         {
 
             List<string> namelist = new List<string>();
@@ -43,9 +43,12 @@ namespace MassFileRenamer.Controller
             return namelist;
         }
 
-        public void RenameFiles(string folderPath, string extension, string csvFilePath, string fromPath, string toPath)
+        public void RenameFiles(string filesPath, string extension, string csvFilePath, string fromPath, string toPath)
         {
-            foreach (string file in ReadFiles(folderPath, extension))
+
+            int counter = 1;
+
+            foreach (string file in ReadFiles(filesPath, extension))
             {
                 int i = file.IndexOf("_");
                 string shortfilename = file.Substring(0, i);
@@ -59,6 +62,8 @@ namespace MassFileRenamer.Controller
                     if (shortfilename == oldname)
                     {
                         System.IO.File.Move($@"{fromPath}{file}", $@"{toPath}{newname}{file.Substring(i)}", true);
+                        Console.WriteLine($"{file} renamed to {newname}{file.Substring(i)} ({counter})");
+                        counter++;
                     }
                 }
             }
